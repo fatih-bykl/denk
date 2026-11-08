@@ -1,54 +1,434 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Denk – Kişisel finans uygulaması</title>
-  <meta name="description" content="Gelir/gider, hesap bakiyeleri, borç/alacak ve ödeme takvimi için Android uygulaması. Veriler yalnızca telefonunda ve kendi Google Drive'ında.">
-  <style>
-    :root { --bg: #f4fbf8; --fg: #161d1c; --muted: #3f4947; --accent: #0f766e; --on-accent: #ffffff; --card: #ffffff; }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #0e1514; --fg: #dde4e1; --muted: #bec9c6; --accent: #82d5c8; --on-accent: #00201c; --card: #161d1c; }
-    }
-    body { margin: 0; background: var(--bg); color: var(--fg);
-      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-    main { max-width: 720px; margin: 0 auto; padding: 48px 16px 64px; }
-    h1 { color: var(--accent); font-size: 2.5rem; margin: 0; }
-    .lead { font-size: 1.15rem; color: var(--muted); margin-top: 4px; }
-    .button { display: inline-block; margin: 24px 0 8px; padding: 14px 28px; border-radius: 999px;
-      background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none; }
-    .note { color: var(--muted); font-size: 0.9rem; margin: 0; }
-    ul { padding-left: 20px; }
-    li { margin: 6px 0; }
-    .card { background: var(--card); border-radius: 12px; padding: 4px 20px; margin-top: 32px; }
-    a { color: var(--accent); }
-    footer { margin-top: 40px; color: var(--muted); font-size: 0.9rem; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Denk – Kişisel finans uygulaması | İnternet Sihirbazı</title>
+  <meta name="description" content="Denk: gelir/gider, hesap bakiyeleri, borç/alacak ve ödeme takvimi için ücretsiz Android uygulaması. Hesap açmak yok, veriler telefonunda; isteğe bağlı Google Drive yedeği.">
+  <meta name="theme-color" content="#09090b">
+  <link rel="canonical" href="https://www.internetsihirbazi.com/denk/">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:site_name" content="İnternet Sihirbazı">
+  <meta property="og:title" content="Denk – Kişisel finans uygulaması">
+  <meta property="og:description" content="Gelir/gider, bakiyeler, borç/alacak ve ödeme takvimi. Hesap yok, sunucu yok; veriler telefonunda.">
+  <meta property="og:url" content="https://www.internetsihirbazi.com/denk/">
+  <meta property="og:image" content="https://www.internetsihirbazi.com/denk/img/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    // Ana siteyle aynı tema tercihi ("theme": "dark" | "light"); varsayılan koyu.
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.className = 'light';
+      }
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Denk",
+    "operatingSystem": "Android 7.0+",
+    "applicationCategory": "FinanceApplication",
+    "inLanguage": "tr",
+    "softwareVersion": "1.0",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TRY" },
+    "downloadUrl": "https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk",
+    "publisher": { "@type": "Organization", "name": "İnternet Sihirbazı", "url": "https://www.internetsihirbazi.com/" }
+  }
+  </script>
 </head>
 <body>
-<main>
-  <h1>Denk</h1>
-  <p class="lead">Gelir/gider, hesap bakiyeleri, borç/alacak ve ödeme takvimi — tek uygulamada.</p>
 
-  <a class="button" href="https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk">Android için indir (APK)</a>
-  <p class="note">Android 7.0 ve üzeri. İndirdikten sonra dosyayı aç; telefon "bilinmeyen kaynaklardan
-    yükleme" izni isterse ver.</p>
+<!-- Simgeler (Lucide çizgi simgeleri) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.5A2 2 0 0 0 8.5 13.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 8.94A2 2 0 0 0 9.94 7.5l1.58-6.13a.5.5 0 0 1 .96 0L14.06 7.5A2 2 0 0 0 15.5 8.94l6.13 1.58a.5.5 0 0 1 0 .96L15.5 13.06a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"/></symbol>
+    <symbol id="i-user-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5M22 8l-5 5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01M8.5 16.43a5 5 0 0 1 7 0M2 8.82a15 15 0 0 1 4.17-2.65M10.66 5c4.01-.36 8.14.9 11.34 3.76M16.85 11.25a10 10 0 0 1 2.22 1.68M5 13a10 10 0 0 1 5.24-2.76"/><path d="m2 2 20 20"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></symbol>
+    <symbol id="i-arrows" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-tags" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></symbol>
+    <symbol id="i-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
+  </defs>
+</svg>
 
-  <div class="card">
-    <ul>
-      <li><strong>Hesap açmak yok.</strong> Uygulamayı aç ve kullanmaya başla.</li>
-      <li><strong>Verilerin yalnızca senin.</strong> Kayıtların telefonunda durur; sunucumuz yok, verini görmeyiz.</li>
-      <li><strong>Google Drive'a yedek.</strong> İstersen kendi Drive'ına otomatik yedeklenir, yeni telefonda geri yüklersin.</li>
-      <li><strong>İnternetsiz çalışır.</strong> Kayıt eklemek için bağlantı gerekmez.</li>
-      <li><strong>Ödeme hatırlatmaları.</strong> Kira, fatura ve taksitler yaklaşınca bildirim gelir.</li>
-    </ul>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="İnternet Sihirbazı ana sayfa">
+      <span class="logo-pill" aria-hidden="true"></span>
+      <span>İnternet Sihirbazı</span>
+    </a>
+    <span class="crumb" aria-hidden="true">/ <b>Denk</b></span>
+    <nav class="nav" aria-label="Sayfa bölümleri">
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#ekranlar">Ekranlar</a>
+      <a href="#kurulum">Kurulum</a>
+      <a href="#sss">SSS</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Açık/koyu tema">
+        <svg class="theme-sun"><use href="#i-sun"/></svg>
+        <svg class="theme-moon"><use href="#i-moon"/></svg>
+      </button>
+      <a class="dl-btn" href="https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk" aria-label="Denk'i indir">
+        <svg><use href="#i-download"/></svg><span>İndir</span>
+      </a>
+    </div>
   </div>
+</header>
 
-  <footer>
-    <a href="gizlilik.html">Gizlilik politikası</a> ·
-    <a href="https://github.com/fatih-bykl/denk">Kaynak kodu</a> ·
-    <a href="mailto:admin@internetsihirbazi.com">İletişim</a>
-  </footer>
+<main class="wrap">
+
+  <section class="hero card" aria-labelledby="baslik">
+    <div>
+      <img class="hero-icon" src="img/denk-icon.webp" width="72" height="72" alt="Denk uygulama simgesi">
+      <span class="pill">Android uygulaması · Ücretsiz</span>
+      <h1 id="baslik">Denk</h1>
+      <p class="lead">Gelir, gider, borç ve ödemelerin tek yerde. Hesabını denk tut.</p>
+      <p class="desc">Banka, nakit ve kartlarındaki bakiyeyi, kira ve fatura gibi düzenli ödemeleri,
+        taksitli borçları ve kime ne kadar borcun olduğunu sade bir uygulamada takip et.
+        Hesap açmak yok; verilerin yalnızca senin telefonunda.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk">
+          <svg><use href="#i-download"/></svg>APK'yı indir
+        </a>
+        <a class="btn btn-ghost" href="#ozellikler">Özellikleri gör</a>
+      </div>
+      <ul class="meta">
+        <li><svg><use href="#i-check"/></svg>Android 7.0 ve üzeri</li>
+        <li><svg><use href="#i-check"/></svg>Sürüm 1.0</li>
+        <li><svg><use href="#i-check"/></svg>Reklamsız</li>
+        <li><svg><use href="#i-check"/></svg>Açık kaynak</li>
+      </ul>
+    </div>
+    <div class="hero-phones" aria-hidden="true">
+      <div class="phone back"><img src="img/takvim.webp" width="540" height="1200" alt="" loading="eager"></div>
+      <div class="phone"><img src="img/ozet.webp" width="540" height="1200" alt="" fetchpriority="high"></div>
+    </div>
+  </section>
+
+  <section class="summary card" aria-label="Kısaca Denk">
+    <div class="summary-item">
+      <svg><use href="#i-user-x"/></svg>
+      <div><b>Hesap açmak yok</b><span>Uygulamayı aç, hemen kullanmaya başla.</span></div>
+    </div>
+    <div class="summary-item">
+      <svg><use href="#i-phone"/></svg>
+      <div><b>Verilerin sende</b><span>Kayıtların telefonunda durur; sunucumuz yok.</span></div>
+    </div>
+    <div class="summary-item">
+      <svg><use href="#i-cloud"/></svg>
+      <div><b>Drive'a yedek</b><span>İstersen kendi Google Drive'ına otomatik yedeklenir.</span></div>
+    </div>
+    <div class="summary-item">
+      <svg><use href="#i-wifi-off"/></svg>
+      <div><b>İnternetsiz çalışır</b><span>Kayıt eklemek için bağlantı gerekmez.</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="ozellikler" aria-labelledby="ozellikler-baslik">
+    <div class="section-head">
+      <p class="eyebrow">Özellikler</p>
+      <h2 id="ozellikler-baslik">Paranı yönetmek için gereken her şey</h2>
+      <p>Günlük harcamadan uzun vadeli taksitlere kadar bütün para akışın tek uygulamada.</p>
+    </div>
+    <div class="features">
+      <article class="feature card">
+        <div class="feature-icon c-teal"><svg><use href="#i-layout"/></svg></div>
+        <h3>Özet ekranı</h3>
+        <p>Uygulamayı açınca durumun tek bakışta önünde.</p>
+        <ul>
+          <li>Tüm hesapların toplam bakiyesi</li>
+          <li>Bu ay ödenecek toplam tutar</li>
+          <li>Yaklaşan ve geciken ödemeler</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-blue"><svg><use href="#i-chart"/></svg></div>
+        <h3>Nakit akışı grafiği</h3>
+        <p>Son 6 ayın gelir ve giderini yan yana gör.</p>
+        <ul>
+          <li>Aylık gelir, gider ve net tablo</li>
+          <li>Eksi aylar kırmızıyla işaretli</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-green"><svg><use href="#i-arrows"/></svg></div>
+        <h3>Gelir ve gider</h3>
+        <p>Harcamalarını ve gelirlerini saniyeler içinde kaydet.</p>
+        <ul>
+          <li>Kategori, hesap, tarih ve not</li>
+          <li>Ay ay gezinme, aylık toplamlar</li>
+          <li>Tür ve hesaba göre süzme</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-purple"><svg><use href="#i-wallet"/></svg></div>
+        <h3>Hesaplar</h3>
+        <p>Nakit, banka hesabı, kredi kartı… istediğin kadar hesap.</p>
+        <ul>
+          <li>Bakiye işlemlerden kendiliğinden hesaplanır</li>
+          <li>Açılış bakiyesi, eksi bakiye (kart borcu)</li>
+          <li>Kullanmadığın hesabı arşivle</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-amber"><svg><use href="#i-tags"/></svg></div>
+        <h3>Kategoriler</h3>
+        <p>Market, kira, faturalar, maaş… 17 hazır kategoriyle başla.</p>
+        <ul>
+          <li>Kendi kategorilerini ekle, simge seç</li>
+          <li>Gelir ve gider kategorileri ayrı</li>
+          <li>Eski kategorileri arşivle</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-blue"><svg><use href="#i-calendar"/></svg></div>
+        <h3>Ödeme takvimi</h3>
+        <p>Kira, fatura, abonelik ve düzenli gelirlerin takvimde.</p>
+        <ul>
+          <li>Haftalık, aylık, yıllık ya da tek seferlik</li>
+          <li>"Her 2 ayda bir" gibi aralıklar, bitiş tarihi veya adet</li>
+          <li>Tek dokunuşla öde ya da atla; ödeme işleme dönüşür</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-rose"><svg><use href="#i-bell"/></svg></div>
+        <h3>Hatırlatmalar</h3>
+        <p>Ödeme günü yaklaşınca telefonuna bildirim gelir.</p>
+        <ul>
+          <li>Kaç gün önce hatırlatılacağını sen seç</li>
+          <li>Telefon yeniden başlasa da kurulu kalır</li>
+          <li>İnternet gerekmez, bildirimler telefonda kurulur</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-amber"><svg><use href="#i-handshake"/></svg></div>
+        <h3>Borç ve alacak</h3>
+        <p>Kime ne kadar borcun, kimden ne kadar alacağın var?</p>
+        <ul>
+          <li>Taksitli borç: aylık plan otomatik çıkar</li>
+          <li>Kuruş farkı son taksite eklenir</li>
+          <li>Kısmi ödeme, kalan tutar ve sıradaki vade</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-teal"><svg><use href="#i-cloud"/></svg></div>
+        <h3>Google Drive yedeği</h3>
+        <p>Telefonun kaybolsa ya da değişse de verilerin güvende.</p>
+        <ul>
+          <li>Değişiklik oldukça otomatik yedek</li>
+          <li>Son 5 yedek saklanır, istediğini geri yükle</li>
+          <li>Drive'ındaki diğer dosyalarına erişilmez</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-green"><svg><use href="#i-shield"/></svg></div>
+        <h3>Gizlilik önce gelir</h3>
+        <p>Hesap yok, sunucu yok, reklam ve takip yok.</p>
+        <ul>
+          <li>Kayıtların yalnızca telefonunda</li>
+          <li>Banka hesabına ya da kartına bağlanmaz</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-purple"><svg><use href="#i-wifi-off"/></svg></div>
+        <h3>Çevrimdışı ve hızlı</h3>
+        <p>İnternet yokken de her şey çalışır; bekleme yok.</p>
+        <ul>
+          <li>Koyu ve açık tema, telefonuna uyar</li>
+          <li>Türkçe para ve tarih biçimleri</li>
+        </ul>
+      </article>
+      <article class="feature card">
+        <div class="feature-icon c-rose"><svg><use href="#i-trash"/></svg></div>
+        <h3>Tüm verilerimi sil</h3>
+        <p>Baştan başlamak istersen tek adımda her şeyi sil.</p>
+        <ul>
+          <li>Yanlışlıkla silmeye karşı "SİL" onayı</li>
+          <li>Drive'daki yedekleri de ayrıca silebilirsin</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="ekranlar" aria-labelledby="ekranlar-baslik">
+    <div class="gallery-card card">
+      <div class="gallery-top">
+        <div class="section-head" style="margin:0">
+          <p class="eyebrow">Ekranlar</p>
+          <h2 id="ekranlar-baslik">Uygulamadan görüntüler</h2>
+        </div>
+        <div class="gallery-nav">
+          <button class="icon-btn" type="button" data-scroll="-1" aria-label="Önceki ekranlar"><svg><use href="#i-left"/></svg></button>
+          <button class="icon-btn" type="button" data-scroll="1" aria-label="Sonraki ekranlar"><svg><use href="#i-right"/></svg></button>
+        </div>
+      </div>
+      <div class="gallery" id="gallery" tabindex="0" aria-label="Ekran görüntüleri, yana kaydır">
+        <figure>
+          <div class="phone"><img src="img/ozet.webp" width="540" height="1200" loading="lazy" alt="Özet ekranı: yaklaşan ödemeler, toplam bakiye ve bu ay ödenecek tutar"></div>
+          <figcaption><b>Özet</b><span>Bakiye, bu ay ödenecek, yaklaşan ödemeler</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/ozet-grafik.webp" width="540" height="1200" loading="lazy" alt="Son 6 ayın gelir ve gider grafiği ile aylık tablo"></div>
+          <figcaption><b>Nakit akışı</b><span>Son 6 ayın gelir ve gideri</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/islemler.webp" width="540" height="1200" loading="lazy" alt="İşlemler ekranı: aylık gelir, gider ve net toplamlarla günlere göre işlemler"></div>
+          <figcaption><b>İşlemler</b><span>Ay ay gelir ve giderler, süzgeçler</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/islem-ekle.webp" width="540" height="1200" loading="lazy" alt="Yeni işlem formu: gider ya da gelir, tutar, hesap, kategori, tarih ve not"></div>
+          <figcaption><b>Hızlı kayıt</b><span>Tutar, hesap, kategori, tarih</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/takvim.webp" width="540" height="1200" loading="lazy" alt="Ödeme takvimi: ay görünümünde ödeme günleri ve günün ödemeleri"></div>
+          <figcaption><b>Takvim</b><span>Ödeme günleri tek bakışta</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/borclar.webp" width="540" height="1200" loading="lazy" alt="Borç ve alacak ekranı: toplam borç, toplam alacak, taksit ilerlemesi"></div>
+          <figcaption><b>Borç / Alacak</b><span>Taksitler, kalan tutar, vade</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/hesaplar.webp" width="540" height="1200" loading="lazy" alt="Hesaplar ekranı: nakit, banka hesabı ve kredi kartı bakiyeleri"></div>
+          <figcaption><b>Hesaplar</b><span>Nakit, banka, kredi kartı</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone"><img src="img/yedek.webp" width="540" height="1200" loading="lazy" alt="Google Drive yedeği ekranı: son yedek zamanı ve yedek listesi"></div>
+          <figcaption><b>Drive yedeği</b><span>Otomatik yedek, geri yükleme</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kurulum" aria-labelledby="kurulum-baslik">
+    <div class="section-head">
+      <p class="eyebrow">Kurulum</p>
+      <h2 id="kurulum-baslik">Üç adımda kullanmaya başla</h2>
+    </div>
+    <div class="steps">
+      <div class="step card">
+        <h3>APK'yı indir</h3>
+        <p><a href="https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk">Denk-android.apk</a>
+          dosyasını telefonuna indir. Android 7.0 ve üzeri tüm telefonlarda çalışır.</p>
+      </div>
+      <div class="step card">
+        <h3>Dosyayı aç ve yükle</h3>
+        <p>İndirilen dosyaya dokun. Telefon "bilinmeyen kaynaklardan yükleme" izni isterse
+          tarayıcına bu izni ver ve "Yükle"ye bas.</p>
+      </div>
+      <div class="step card">
+        <h3>Kullanmaya başla</h3>
+        <p>Denk'i aç; Nakit hesabı ve 17 kategori hazır gelir. İstersen Ayarlar'dan
+          Google Drive yedeğini aç.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="privacy-band card">
+      <div>
+        <h2>Verilerin yalnızca senin</h2>
+        <p>Denk'te hesap açılmaz ve sunucu yoktur. Kayıtların telefonundaki veritabanında durur;
+          yedeklemeyi açarsan bir kopyası doğrudan kendi Google Drive'ına gider. Biz hiçbir verini
+          görmeyiz, toplamayız, saklamayız.</p>
+        <ul class="checks">
+          <li><svg><use href="#i-check"/></svg>Reklam yok</li>
+          <li><svg><use href="#i-check"/></svg>Takip yok</li>
+          <li><svg><use href="#i-check"/></svg>Banka bağlantısı yok</li>
+          <li><svg><use href="#i-check"/></svg>Kaynak kodu açık</li>
+        </ul>
+      </div>
+      <a class="btn btn-ghost" href="gizlilik.html">Gizlilik politikası</a>
+    </div>
+  </section>
+
+  <section class="section" id="sss" aria-labelledby="sss-baslik">
+    <div class="section-head">
+      <p class="eyebrow">SSS</p>
+      <h2 id="sss-baslik">Sık sorulan sorular</h2>
+    </div>
+    <div class="faq">
+      <details class="card">
+        <summary>Denk ücretli mi?</summary>
+        <p>Hayır. Denk tamamen ücretsizdir; reklam, uygulama içi satın alma ya da abonelik yoktur.</p>
+      </details>
+      <details class="card">
+        <summary>Verilerim nerede saklanıyor?</summary>
+        <p>Yalnızca telefonunda, Denk'in kendi klasöründeki bir veritabanında. Google Drive yedeğini
+          açarsan bir kopyası Drive'ında yalnızca Denk'in görebildiği gizli bir klasöre yazılır.</p>
+      </details>
+      <details class="card">
+        <summary>Telefonumu değiştirirsem ne olur?</summary>
+        <p>Eski telefonda Ayarlar → Google Drive yedeği'ni açman yeterli. Yeni telefonda Denk'i kurup
+          aynı Google hesabıyla bağlan ve listeden son yedeği geri yükle.</p>
+      </details>
+      <details class="card">
+        <summary>İnternet bağlantısı gerekiyor mu?</summary>
+        <p>Hayır. Kayıt eklemek, takvim ve hatırlatmalar internetsiz çalışır. Bağlantı yalnızca
+          Google Drive'a yedek alırken gerekir.</p>
+      </details>
+      <details class="card">
+        <summary>Banka hesabıma ya da kartıma bağlanıyor mu?</summary>
+        <p>Hayır. Denk hiçbir bankaya bağlanmaz; kayıtları sen girersin. Banka şifren ya da kart
+          bilgin hiçbir zaman istenmez.</p>
+      </details>
+      <details class="card">
+        <summary>iPhone'da çalışıyor mu?</summary>
+        <p>Şimdilik yalnızca Android telefonlar içindir (Android 7.0 ve üzeri).</p>
+      </details>
+      <details class="card">
+        <summary>Neden Google Play yerine APK?</summary>
+        <p>Denk şu an doğrudan APK olarak dağıtılıyor. Dosya, kaynak koduyla birlikte GitHub'da
+          yayınlanır; her sürüm aynı geliştirici imzasını taşır, böylece güncellemeler mevcut
+          uygulamanın üzerine sorunsuz kurulur.</p>
+      </details>
+    </div>
+  </section>
+
 </main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="/">
+        <span class="logo-pill" aria-hidden="true"></span>
+        <span>İnternet Sihirbazı</span>
+      </a>
+      <p>Denk 1.0 · © 2026 İnternet Sihirbazı</p>
+    </div>
+    <nav class="footer-links" aria-label="Alt bağlantılar">
+      <a href="/">Ana sayfa</a>
+      <a href="gizlilik.html">Gizlilik politikası</a>
+      <a href="https://github.com/fatih-bykl/denk">Kaynak kodu</a>
+      <a href="https://github.com/fatih-bykl/denk/releases">Tüm sürümler</a>
+      <a href="mailto:admin@internetsihirbazi.com">İletişim</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="site.js?v=1" defer></script>
 </body>
 </html>

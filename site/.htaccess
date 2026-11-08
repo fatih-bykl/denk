@@ -1,12 +1,17 @@
 # Denk tanıtım ve gizlilik sayfaları — Apache / LiteSpeed sunucular için.
 #
-# Sayfalar her açılışta sunucuya sorularak doğrulanır; güncelleme hemen görünür.
-# Dosya değişmediyse sunucu "304 değişmedi" der, tekrar indirilmez.
+# HTML her açılışta sunucuya sorulur (güncelleme hemen görünür). CSS ve JS
+# adreslerinde sürüm parametresi (?v=N) olduğu için uzun süre önbellekte kalabilir.
 <IfModule mod_headers.c>
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  <FilesMatch "\.(png|svg|ico)$">
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(png|jpg|webp|svg|ico)$">
     Header set Cache-Control "public, max-age=604800"
   </FilesMatch>
 </IfModule>
+
+AddType image/webp .webp

@@ -56,6 +56,16 @@ Kurallar ve hesaplamalar `app/test/data/local_database_test.dart` içinde sınan
 o an hata verirse derleme "Hash of downloaded file" hatasıyla durur; birkaç dakika sonra
 tekrar dene.
 
+## Ekran görüntüleri
+
+Tanıtım sayfası ve mağaza için ekran görüntüleri örnek verilerle uygulamanın kendisinden üretilir:
+
+```sh
+cd app && flutter test --update-goldens screenshots/screenshots_test.dart
+```
+
+Çıktı `app/screenshots/out/` (1080×2400 PNG). Siteye `site/img/*.webp` olarak küçültülüp konur.
+
 ## Web sayfaları
 
 `site/` klasörü `main` dalına gönderildiğinde GitHub Actions ("Web sitesine yükle") onu
