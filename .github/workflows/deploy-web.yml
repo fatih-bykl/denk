@@ -1,0 +1,38 @@
+# site/ klasörünü (tanıtım ve gizlilik sayfaları) internetsihirbazi.com/denk/ klasörüne yükler.
+# main dalında site/ değiştiğinde kendiliğinden, ya da Actions sekmesinden elle çalışır.
+#
+# Yükleme eşitlemedir: site/ içinde olmayan, önceden yüklenmiş dosyalar sunucudan silinir
+# (sunucudaki .ftp-deploy-sync-state.json dosyası neyin yüklendiğini tutar).
+#
+# Gereken depo sırları (Settings → Secrets and variables → Actions):
+#   FTP_USERNAME  — DirectAdmin'de açılan FTP hesabı (kökü public_html)
+#   FTP_PASSWORD  — o hesabın parolası
+name: Web sitesine yükle
+
+on:
+  push:
+    branches: [main]
+    paths: ['site/**']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-web
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: FTPS ile denk/ klasörüne yükle
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.internetsihirbazi.com
+          protocol: ftps
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./site/
+          server-dir: ./denk/

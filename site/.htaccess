@@ -1,0 +1,12 @@
+# Denk tanıtım ve gizlilik sayfaları — Apache / LiteSpeed sunucular için.
+#
+# Sayfalar her açılışta sunucuya sorularak doğrulanır; güncelleme hemen görünür.
+# Dosya değişmediyse sunucu "304 değişmedi" der, tekrar indirilmez.
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(png|svg|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>

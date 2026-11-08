@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bildirim simgesi koddan adıyla kullanılıyor; yayın derlemesinde kaynak küçültme onu silmesin. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_stat_denk" />

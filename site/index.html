@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Denk – Kişisel finans uygulaması</title>
+  <meta name="description" content="Gelir/gider, hesap bakiyeleri, borç/alacak ve ödeme takvimi için Android uygulaması. Veriler yalnızca telefonunda ve kendi Google Drive'ında.">
+  <style>
+    :root { --bg: #f4fbf8; --fg: #161d1c; --muted: #3f4947; --accent: #0f766e; --on-accent: #ffffff; --card: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0e1514; --fg: #dde4e1; --muted: #bec9c6; --accent: #82d5c8; --on-accent: #00201c; --card: #161d1c; }
+    }
+    body { margin: 0; background: var(--bg); color: var(--fg);
+      font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { color: var(--accent); font-size: 2.5rem; margin: 0; }
+    .lead { font-size: 1.15rem; color: var(--muted); margin-top: 4px; }
+    .button { display: inline-block; margin: 24px 0 8px; padding: 14px 28px; border-radius: 999px;
+      background: var(--accent); color: var(--on-accent); font-weight: 600; text-decoration: none; }
+    .note { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    ul { padding-left: 20px; }
+    li { margin: 6px 0; }
+    .card { background: var(--card); border-radius: 12px; padding: 4px 20px; margin-top: 32px; }
+    a { color: var(--accent); }
+    footer { margin-top: 40px; color: var(--muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Denk</h1>
+  <p class="lead">Gelir/gider, hesap bakiyeleri, borç/alacak ve ödeme takvimi — tek uygulamada.</p>
+
+  <a class="button" href="https://github.com/fatih-bykl/denk/releases/latest/download/Denk-android.apk">Android için indir (APK)</a>
+  <p class="note">Android 7.0 ve üzeri. İndirdikten sonra dosyayı aç; telefon "bilinmeyen kaynaklardan
+    yükleme" izni isterse ver.</p>
+
+  <div class="card">
+    <ul>
+      <li><strong>Hesap açmak yok.</strong> Uygulamayı aç ve kullanmaya başla.</li>
+      <li><strong>Verilerin yalnızca senin.</strong> Kayıtların telefonunda durur; sunucumuz yok, verini görmeyiz.</li>
+      <li><strong>Google Drive'a yedek.</strong> İstersen kendi Drive'ına otomatik yedeklenir, yeni telefonda geri yüklersin.</li>
+      <li><strong>İnternetsiz çalışır.</strong> Kayıt eklemek için bağlantı gerekmez.</li>
+      <li><strong>Ödeme hatırlatmaları.</strong> Kira, fatura ve taksitler yaklaşınca bildirim gelir.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <a href="gizlilik.html">Gizlilik politikası</a> ·
+    <a href="https://github.com/fatih-bykl/denk">Kaynak kodu</a> ·
+    <a href="mailto:admin@internetsihirbazi.com">İletişim</a>
+  </footer>
+</main>
+</body>
+</html>
