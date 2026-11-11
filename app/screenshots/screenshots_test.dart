@@ -347,13 +347,47 @@ void main() {
   }
 
   testWidgets('özet', (t) => shoot(t, 'ozet', Routes.dashboard));
+  // Bir bölümü ekranın üstüne kaydırır (başlığı biraz aşağıda kalsın diye geri çeker).
+  Future<void> Function() scrollTo(
+    WidgetTester t,
+    String text, [
+    double back = 40,
+  ]) => () async {
+    // Liste, ekran dışındaki kartları henüz oluşturmamış olabilir: önce oraya kaydır.
+    await t.scrollUntilVisible(
+      find.text(text),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await t.ensureVisible(find.text(text));
+    await t.pumpAndSettle();
+    await t.drag(find.byType(Scrollable).first, Offset(0, back));
+  };
+  testWidgets(
+    'özet halka',
+    (t) => shoot(
+      t,
+      'ozet-halka',
+      Routes.dashboard,
+      then: scrollTo(t, 'Kasım 2026', 70),
+    ),
+  );
+  testWidgets(
+    'özet kategoriler',
+    (t) => shoot(
+      t,
+      'ozet-kategori',
+      Routes.dashboard,
+      then: scrollTo(t, 'Gider kategorileri', 60),
+    ),
+  );
   testWidgets(
     'özet grafik',
     (t) => shoot(
       t,
       'ozet-grafik',
       Routes.dashboard,
-      then: () => t.drag(find.byType(Scrollable).first, const Offset(0, -520)),
+      then: scrollTo(t, 'Nakit akışı · son 6 ay', 40),
     ),
   );
   testWidgets('işlemler', (t) => shoot(t, 'islemler', Routes.transactions));

@@ -90,8 +90,8 @@ void main() {
     transactions.fetchFailure = _offline;
     await _open(tester, Routes.dashboard);
 
-    // Nakit akışı yüklenemedi, diğer kartlar çalışıyor.
-    expect(find.text('Yüklenemedi. Aşağı çekerek yenile.'), findsOneWidget);
+    // İşleme dayanan iki kart (ay özeti, nakit akışı) yüklenemedi; diğerleri çalışıyor.
+    expect(find.text('Yüklenemedi. Aşağı çekerek yenile.'), findsNWidgets(2));
     expect(find.byKey(const Key('dash-balance')), findsOneWidget);
     expect(find.byKey(const Key('dash-due')), findsOneWidget);
   });

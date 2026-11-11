@@ -14,8 +14,10 @@ import '../../schedule/domain/payment_schedule.dart';
 import '../../schedule/presentation/occurrence_sheet.dart';
 import '../../../services/notifications/reminder.dart';
 import '../../../services/notifications/reminder_sync.dart';
+import '../application/category_breakdown.dart';
 import '../application/dashboard_providers.dart';
 import 'cash_flow_chart.dart';
+import 'month_overview.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -31,6 +33,8 @@ class DashboardScreen extends ConsumerWidget {
             ..invalidate(duePaymentsProvider)
             ..invalidate(upcomingOccurrencesProvider)
             ..invalidate(cashFlowProvider)
+            ..invalidate(categoryBreakdownProvider)
+            ..invalidate(monthComparisonProvider)
             ..invalidate(remindableOccurrencesProvider);
           invalidateSchedule(ref);
         },
@@ -39,6 +43,9 @@ class DashboardScreen extends ConsumerWidget {
           children: const [
             _DueSoonBanner(),
             _BalanceCard(),
+            SizedBox(height: 12),
+            MonthOverviewCard(),
+            CategoryListCard(),
             SizedBox(height: 12),
             _DueCard(),
             SizedBox(height: 12),
